@@ -27,9 +27,16 @@ async function handleSearch(){
 
       <button onClick={handleSearch}>Search</button>
 
-      <div>
-        {movies.map((movie) => (
-          <p key={movie.imdbID}>{movie.Title}</p>
+      <div className="movies">
+        {movies.map((movie) =>(
+          <div className="movie-card" key={movie.imdbID}>
+            <img 
+            src= {movie.Poster !== "N/A" ? movie.Poster : ""} 
+            alt={movie.Title}
+            />
+            <h3>{movie.Title}</h3>
+            <p>{movie.year}</p>
+          </div>
         ))}
       </div>
     </div>
