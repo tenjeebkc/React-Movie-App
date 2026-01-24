@@ -40,6 +40,11 @@ input{
   padding: 10px;
   border-radius: 10px;
   text-align: center;
+  cursor: pointer;
+}
+.movie-card:hover{
+    transform: scale(1.03);
+    transition: all 0.3s ease;
 }
 
 .movie-card img {
