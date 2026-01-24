@@ -2,44 +2,72 @@ import { useState } from 'react'
 import './App.css'
 
 function App() {
-const [query, setQuery] = useState("");
-const [movies, setMovies] = useState([])
+  const [query, setQuery] = useState("");
+  const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-async function handleSearch(){
-  if(!query) return;
+  async function handleSearch() {
+    if (!query) return;
 
-  const response = await fetch(
-     `https://www.omdbapi.com/?s=${query}&apikey=c443b2c5`
-  );
-  const data = await response.json();
-  setMovies(data.Search || []);
-}
+    // Start loading & reset old data
+    setLoading(true);
+    setError("");
+    setMovies([]);
+
+    try {
+
+      const response = await fetch(
+        `https://www.omdbapi.com/?s=${query}&apikey=c443b2c5`
+      );
+      const data = await response.json();
+
+      // Handle moie not found
+      if (data.Response === "False") {
+        setError(data.Error);
+      }
+      else {
+        setMovies(data.Search);
+      }
+    } catch (err) {
+      setError("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+
+  }
 
   return (
     <>
-    <div>
-      <h1>Movie App 🎬</h1>
+      <div>
+        <div className="heading">
 
-      <input type="text"
-      placeholder='Search Movie...'
-      value={query}
-      onChange={(e)=> setQuery(e.target.value)} />
+        <h1>Movie App🎬 - Made for you.</h1>
+        <h3>Search your favourite movies here.</h3>
 
-      <button onClick={handleSearch}>Search</button>
+        <input type="text"
+          placeholder='Search Movie...'
+          value={query}
+          onChange={(e) => setQuery(e.target.value)} />
 
-      <div className="movies">
-        {movies.map((movie) =>(
-          <div className="movie-card" key={movie.imdbID}>
-            <img 
-            src= {movie.Poster !== "N/A" ? movie.Poster : ""} 
-            alt={movie.Title}
-            />
-            <h3>{movie.Title}</h3>
-            <p>{movie.year}</p>
+        <button onClick={handleSearch}>Search</button>
+        {loading && <p>Loading...</p>}
+        {error && <p>{error}</p>}
           </div>
-        ))}
+
+        <div className="movies">
+          {movies.map((movie) => (
+            <div className="movie-card" key={movie.imdbID}>
+              <img
+                src={movie.Poster !== "N/A" ? movie.Poster : ""}
+                alt={movie.Title}
+              />
+              <h3>{movie.Title}</h3>
+              <p>{movie.Year}</p>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
     </>
   )
 }

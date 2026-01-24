@@ -1,14 +1,41 @@
+body{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color:   #1E1E1E;
+  color: white;
+}
+.heading{
+  text-align: center;
+  margin: 50px;
+}
+
+button{
+padding: 13px;
+font-weight: bold;
+font-size: 15px ;
+background-color: rgb(24, 143, 24);
+color: white;
+border: none;
+border-radius: 10px;
+margin-left: 15px;
+}
+
+input{
+  padding: 10px;
+  width: 250px;
+  font-size: 18px;
+}
 
 .movies {
   display: grid;
   /* Responsive grid: auto-fill columns, min 180px wide, expand to fit */
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+  gap: 25px;
   margin-top: 20px;
+  padding: 20px;
 }
 
 .movie-card {
-  background: #111111e6;
+  background: #111111;
   color: #fff;
   padding: 10px;
   border-radius: 10px;
