@@ -22,7 +22,7 @@ function App() {
       );
       const data = await response.json();
 
-      // Handle moie not found
+      // Handle movie not found
       if (data.Response === "False") {
         setError(data.Error);
       }
@@ -48,11 +48,12 @@ function App() {
         <input type="text"
           placeholder='Search Movie...'
           value={query}
-          onChange={(e) => setQuery(e.target.value)} />
+          onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && handleSearch()} />
 
         <button onClick={handleSearch}>Search</button>
         {loading && <p>Loading...</p>}
-        {error && <p>{error}</p>}
+        {error && <p style={{color: "red"}}>{error}</p>}
           </div>
 
         <div className="movies">
