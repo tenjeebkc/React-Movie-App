@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import { Route, Routes, Link } from 'react-router-dom';
 
 function App() {
   const [query, setQuery] = useState("");
@@ -38,8 +39,14 @@ function App() {
   }
 
   return (
-    <>
-      <div>
+    // <Routes> = Here are all the pages of my app
+    // <Route path = "/" element = {...} /> = When url is /, Show this UI
+    <Routes>
+      <Route
+      path='/'
+      element = {
+
+        <div>
         <div className="heading">
 
         <h1>Movie App🎬 - Made for you.</h1>
@@ -58,18 +65,25 @@ function App() {
 
         <div className="movies">
           {movies.map((movie) => (
+            <Link
+            to={`/movie/${movie.imdbID}`}
+            key={movie.imdbID}
+            style={{textDecoration:"none", color:"inherit"}}
+            >
             <div className="movie-card" key={movie.imdbID}>
               <img
                 src={movie.Poster !== "N/A" ? movie.Poster : ""}
                 alt={movie.Title}
-              />
+                />
               <h3>{movie.Title}</h3>
               <p>{movie.Year}</p>
             </div>
+          </Link>
           ))}
         </div>
       </div>
-    </>
+    }/>
+    </Routes>
   )
 }
 
