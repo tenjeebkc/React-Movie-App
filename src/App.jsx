@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import { Route, Routes, Link } from 'react-router-dom';
+import MovieDetails from './components/MovieDetails';
 
 function App() {
   const [query, setQuery] = useState("");
@@ -83,6 +84,9 @@ function App() {
         </div>
       </div>
     }/>
+
+    {/* Movie Details Path */}
+    <Route path='/movie/:id' element = {<MovieDetails/>}/>
     </Routes>
   )
 }
