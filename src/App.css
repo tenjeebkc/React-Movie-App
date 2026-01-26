@@ -53,9 +53,11 @@ input{
 
 }
 
-.detail{
-  width: 100vw;
+.back-btn{
+  margin-top: 12px;
+  margin-left: 50px;
 }
+
 .movie-details{
   display: flex;
   flex-direction: column;
@@ -65,4 +67,5 @@ input{
   text-align: center;
   width: 800px;
   margin: auto;
+  max-height: 700px;
 }

@@ -25,7 +25,7 @@ function MovieDetails() {
 
     return (
         <div className="detail">
-            <button onClick={() => navigate(-1)}>Back</button>
+            <button className='back-btn' onClick={() => navigate(-1)}>Back</button>
             {/* If you want to button to go to the specific router
             <button onClick={() => navigate('/movies')}>Back to Movies</button> */}
 
