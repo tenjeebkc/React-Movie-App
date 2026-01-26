@@ -24,19 +24,18 @@ function MovieDetails() {
 
 
     return (
-        <div className="detail">
-            <button className='back-btn' onClick={() => navigate(-1)}>Back</button>
+        <>
             {/* If you want to button to go to the specific router
             <button onClick={() => navigate('/movies')}>Back to Movies</button> */}
-
             <div className='movie-details'>
+            <button className='back-btn' onClick={() => navigate(-1)}>Back</button>
                 <h2>{movie.Title}</h2>
                 <img src={movie.Poster} alt="movie.Title" />
                 <p><strong>Year: </strong>{movie.Year}</p>
                 <p><strong>Genre: </strong>{movie.Genre}</p>
                 <p><strong>Plot: </strong>{movie.Plot}</p>
             </div>
-        </div>
+        </>
     )
 }
 
