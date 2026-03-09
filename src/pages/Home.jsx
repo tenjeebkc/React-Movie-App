@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
+import MovieCard from '../components/MovieCard';
 
 function Home() {
   const [query, setQuery] = useState("");
@@ -28,6 +29,8 @@ function Home() {
       }
       else {
         setMovies(data.Search);
+        localStorage.setItem("movies", JSON.stringify(data.Search))
+        localStorage.setItem("query", query)
       }
     } catch (err) {
       setError("Something went wrong");
@@ -35,6 +38,20 @@ function Home() {
       setLoading(false);
     }
   }
+
+  // Effect effect to save the query 
+  useEffect(() => {
+    const savedMovies = localStorage.getItem("movies")
+    const savedQuery = localStorage.getItem("query")
+
+    if(savedMovies){
+      setMovies(JSON.parse(savedMovies))
+    }
+    if(savedQuery){
+      setQuery(savedQuery)
+    }
+  }, [])
+  
 
   return (
         <div>
@@ -55,20 +72,7 @@ function Home() {
 
         <div className="movies">
           {movies.map((movie) => (
-            <Link
-            to={`/movie/${movie.imdbID}`}
-            key={movie.imdbID}
-            style={{textDecoration:"none", color:"inherit"}}
-            >
-            <div className="movie-card" key={movie.imdbID}>
-              <img
-                src={movie.Poster !== "N/A" ? movie.Poster : ""}
-                alt={movie.Title}
-                />
-              <h3>{movie.Title}</h3>
-              <p>{movie.Year}</p>
-            </div>
-          </Link>
+          <MovieCard key={movie.imdbID} movie={movie}/>
           ))}
         </div>
       </div>
