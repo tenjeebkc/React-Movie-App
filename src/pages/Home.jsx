@@ -51,6 +51,17 @@ function Home() {
       setQuery(savedQuery)
     }
   }, [])
+
+  // Debouncing search feature
+  useEffect(() => {
+  const timer = setTimeout(() =>{
+    if(query){
+      handleSearch()
+    }
+  }, 500)
+  return () => clearTimeout(timer)
+  }, [query])
+  
   
 
   return (
@@ -63,7 +74,7 @@ function Home() {
           placeholder='Search Movie...'
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && handleSearch()} />
+          />
 
         <button onClick={handleSearch}>Search</button>
         {loading && <p>Loading...</p>}
