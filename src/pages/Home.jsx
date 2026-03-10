@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom';
 import MovieCard from '../components/MovieCard';
+import { Link } from 'react-router-dom';
 
-function Home() {
+
+function Home({ favorites, setFavorites }) {
   const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -62,14 +63,14 @@ function Home() {
   return () => clearTimeout(timer)
   }, [query])
   
-  
+
 
   return (
         <div>
         <div className="heading">
         <h1>Movie App🎬 - Made for you.</h1>
         <h3>Search your favourite movies here.</h3>
-
+    <Link to="/favorites">⭐ Favorites</Link>
         <input type="text"
           placeholder='Search Movie...'
           value={query}
@@ -83,7 +84,11 @@ function Home() {
 
         <div className="movies">
           {movies.map((movie) => (
-          <MovieCard key={movie.imdbID} movie={movie}/>
+          <MovieCard 
+          key={movie.imdbID} 
+          movie={movie}
+          favorites = {favorites}
+          setFavorites = {setFavorites}/>
           ))}
         </div>
       </div>
