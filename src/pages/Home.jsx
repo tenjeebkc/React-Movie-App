@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import MovieCard from '../components/MovieCard';
 import { Link } from 'react-router-dom';
 
-
 function Home({ favorites, setFavorites }) {
   const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
@@ -15,7 +14,6 @@ function Home({ favorites, setFavorites }) {
     // Start loading & reset old data
     setLoading(true);
     setError("");
-    setMovies([]);
 
     try {
       const response = await fetch(
@@ -27,9 +25,9 @@ function Home({ favorites, setFavorites }) {
       // Handle movie not found
       if (data.Response === "False") {
         setError(data.Error);
+        setMovies([]); // Clear old results if search fails
       }
       else {
-        setMovies(data.Search);
         localStorage.setItem("movies", JSON.stringify(data.Search))
         localStorage.setItem("query", query)
       }
@@ -40,7 +38,7 @@ function Home({ favorites, setFavorites }) {
     }
   }
 
-  // Effect effect to save the query 
+  // Effect  to save the query 
   useEffect(() => {
     const savedMovies = localStorage.getItem("movies")
     const savedQuery = localStorage.getItem("query")
@@ -53,31 +51,20 @@ function Home({ favorites, setFavorites }) {
     }
   }, [])
 
-  // Debouncing search feature
-  useEffect(() => {
-  const timer = setTimeout(() =>{
-    if(query){
-      handleSearch()
-    }
-  }, 500)
-  return () => clearTimeout(timer)
-  }, [query])
-  
-
-
   return (
         <div>
         <div className="heading">
         <h1>Movie App🎬 - Made for you.</h1>
         <h3>Search your favourite movies here.</h3>
-    <Link to="/favorites">⭐ Favorites</Link>
+    <Link to="/favorites" className='favorites-link'>⭐ Favorites</Link> 
         <input type="text"
           placeholder='Search Movie...'
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
           />
 
-        <button onClick={handleSearch}>Search</button>
+        <button className='search' onClick={handleSearch}>Search</button>
         {loading && <p>Loading...</p>}
         {error && <p style={{color: "red"}}>{error}</p>}
           </div>
